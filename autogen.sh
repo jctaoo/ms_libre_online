@@ -20,7 +20,7 @@ if test `uname -s` = Linux -o `uname -s` = FreeBSD; then
     libtoolize || failed "libtool"
 elif test `uname -s` = Darwin; then
     libtoolize || glibtoolize || failed "Can't find libtoolize or glibtoolize. Use lode or install it yourself."
-elif test `u` == CYGWIN_NT*; then # Build on CygWin
+elif [[ `uname -s` == CYGWIN_NT* ]]; then # Build on CygWin
     cat << EOF
     It seems build on CygWin ($(uname -s))
 EOF
