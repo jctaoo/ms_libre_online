@@ -76,7 +76,9 @@ if !ENABLE_DEBUG
 AM_CPPFLAGS += -DNDEBUG
 endif
 
-AM_LDFLAGS = -pthread -Wl,-E -lpam $(ZLIB_LIBS)
+# For CygWin Build, remote pam
+# AM_LDFLAGS = -pthread -Wl,-E -lpam $(ZLIB_LIBS)
+AM_LDFLAGS = -pthread -Wl,-E $(ZLIB_LIBS)
 
 if ENABLE_SSL
 AM_LDFLAGS += -lssl -lcrypto

@@ -16,7 +16,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <zlib.h>
-#include <security/pam_appl.h>
+// For CgyWin Build: remove PAM related code.
+// #include <security/pam_appl.h>
 
 #include <openssl/evp.h>
 
@@ -63,58 +64,11 @@ std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHand
 
 namespace {
 
-int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
-                         struct pam_response **reply, void *appdata_ptr)
-{
-    *reply = (struct pam_response *)malloc(sizeof(struct pam_response));
-    (*reply)[0].resp = strdup(static_cast<char *>(appdata_ptr));
-    (*reply)[0].resp_retcode = 0;
-
-    return PAM_SUCCESS;
-}
-
 /// Use PAM to check for user / password.
 bool isPamAuthOk(const std::string& userProvidedUsr, const std::string& userProvidedPwd)
 {
-    struct pam_conv localConversation { functionConversation, nullptr };
-    pam_handle_t *localAuthHandle = NULL;
-    int retval;
-
-    localConversation.appdata_ptr = const_cast<char *>(userProvidedPwd.c_str());
-
-    retval = pam_start("coolwsd", userProvidedUsr.c_str(), &localConversation, &localAuthHandle);
-
-    if (retval != PAM_SUCCESS)
-    {
-        LOG_ERR("pam_start returned " << retval);
-        return false;
-    }
-
-    retval = pam_authenticate(localAuthHandle, 0);
-
-    if (retval != PAM_SUCCESS)
-    {
-       if (retval == PAM_AUTH_ERR)
-       {
-           LOG_ERR("PAM authentication failure for user \"" << userProvidedUsr << "\".");
-       }
-       else
-       {
-           LOG_ERR("pam_authenticate returned " << retval);
-       }
-       return false;
-    }
-
-    LOG_INF("PAM authentication success for user \"" << userProvidedUsr << "\".");
-
-    retval = pam_end(localAuthHandle, retval);
-
-    if (retval != PAM_SUCCESS)
-    {
-        LOG_ERR("pam_end returned " << retval);
-    }
-
-    return true;
+    // For CgyWin Build: remove PAM related code.
+    return false;
 }
 
 /// Check for user / password set in coolwsd.xml.
