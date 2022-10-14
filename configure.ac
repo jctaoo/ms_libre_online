@@ -1156,9 +1156,12 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
                         [],
                         [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
-       AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
-                        [],
-                        [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
+
+# Remove Check temp
+#       AC_CHECK_HEADERS([Poco/Net/WebSocket.h],
+#                        [],
+#                        [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
+
        DISABLE_SECCOMP=
        if test "$enable_seccomp" != "no" -a `uname -s` = "Linux"; then
            AC_CHECK_HEADERS([linux/seccomp.h],
